@@ -51,36 +51,6 @@ function ScanDirectory($Directory){
 
 use Symfony\Component\HttpFoundation\Request;
 
-$app->get('/login', function(Request $request) use ($app) {
-  return $app['twig']->render('login.html', array(
-    'error'         => $app['security.last_error']($request),
-    'last_username' => $app['session']->get('_security.last_username'),
-  ));
-});
-
-$app->get('/private', function() use($app) {
-  $entries = ScanDirectory('../../Documents');
-  return $app['twig']->render('list_files.html', array(
-    'folders' => $entries[0],    
-    'files' => $entries[1],
-  ));
-});
-
-$app->get('/public', function() use($app) {
-  $entries = ScanDirectory('../../Documents/public');
-  return $app['twig']->render('list_files.html', array(
-    'folders' => $entires[0],    
-    'files' => $entries[1],
-  ));
-});
-
-$app->get('/img/{img_name}', function($img_name) use ($app) {
-  if (!file_exists(__DIR__.'/assets/'.$img_name)) {
-        $app->abort(404);
-    }
-
-  return $app->sendFile(__DIR__.'/assets/'.$img_name);
-});
 /*
 $app->get('/', function() use($app)) {
   if ($app['security']->isGranted('IS_AUTHENTICATED_ANONYMOUSLY') {
@@ -92,7 +62,54 @@ $app->get('/', function() use($app)) {
     return $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
   }
 };
-*/
+ */
+
+$app->get('/img/{img_name}', function($img_name) use ($app) {
+  if (!file_exists(__DIR__.'/assets/'.$img_name)) {
+    $app->abort(404);
+  }
+
+  return $app->sendFile(__DIR__.'/assets/'.$img_name);
+});
+
+$app->get('/login', function(Request $request) use ($app) {
+  return $app['twig']->render('login.html', array(
+    'error'         => $app['security.last_error']($request),
+    'last_username' => $app['session']->get('_security.last_username'),
+  ));
+});
+
+$app->get('/public', function() use($app) {
+  $entries = ScanDirectory('../../Documents/public');
+  return $app['twig']->render('list_public_files.html', array(
+    'folders' => $entires[0],    
+    'files' => $entries[1],
+  ));
+});
+
+$app->get('/public/{file_name}', function($file_name) use ($app) {
+  if (!file_exists('../../Documents/public/'.$file_name)) {
+    $app->abort(404);
+  }
+
+  return $app->sendFile('../../Documents/public/'.$file_name);
+});
+
+$app->get('/private', function() use($app) {
+  $entries = ScanDirectory('../../Documents');
+  return $app['twig']->render('list_private_files.html', array(
+    'folders' => $entries[0],    
+    'files' => $entries[1],
+  ));
+});
+
+$app->get('/private/{file_name}', function($file_name) use ($app) {
+  if (!file_exists('../../Documents/'.$file_name)) {
+    $app->abort(404);
+  }
+
+  return $app->sendFile('../../Documents/'.$file_name);
+});
 
 $app->run();
 ?>

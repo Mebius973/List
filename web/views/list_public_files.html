@@ -1,0 +1,8 @@
+<table border="0" style="width:20%">
+    {% for folder in folders %}
+    <tr><td><img src="img/folder.png" height="20" width="20"/><a href="{{ app.request.getBaseURL() }}/public/{{ folder }}">{{ folder }}</a></td></tr>
+    {% endfor %}
+    {% for file in files %}
+    <tr><td><img src="img/document.png" height="20" width="20"/><a href="{{ app.request.getBaseURL() }}/public/{{ file }}">{{ file }}</a></td></tr>
+    {% endfor %}
+</table>
