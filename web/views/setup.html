@@ -1,9 +1,14 @@
-<form action="{{ path('setup') }}" method="post">
+<form id="form1" action="{{ path('setup') }}" method="post">
   <label for="username"> Username </label> <br />
   <input type="text" name="username" value="" id="username" /> <br />
   <label for="passwd"> Password </label> <br />
-  <input type="text" name="passwd" value="" id="passwd" /> <br />
+  <input type="password" name="password" id="password" /> <br />
   <label for="check_passwd"> Password Check</label> <br />
-  <input type="text" name="check_passwd" value="" id="check_passwd" /> <br />
-  <input type="submit" />
+  <input type="password" name="check_password" id="check_password" /> <br />
+  <div class="registrationFormAlert" id="divCheckPasswordMatch"></div>
+  <input type="submit" disabled />
 </form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="/js/check_password.js"> </script>
+<script type="text/javascript"> $("#check_password").keyup(checkPasswordMatch); </script> 
