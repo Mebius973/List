@@ -38,7 +38,7 @@ function ScanDirectory($Directory){
   if (!file_exists($Directory)) {
     mkdir($Directory, 0755, true);
   }
-  $MyDirectory = opendir($Directory); 
+  $MyDirectory = opendir($Directory);
   while($Entry = @readdir($MyDirectory)) {
     if($Entry != '.' && $Entry != '..' && $Entry != 'index.*') {
       $enc = mb_detect_encoding($Entry, "UTF-8,ISO-8859-1,ISO-8859-15");
@@ -67,12 +67,16 @@ $app->get('/', function() use($app) {
   return $app['twig']->render('index.html');
 });
 
-
-$app->get('/setup', function() use ($app) {
-  return $app['twig']->render('setup.html');
+$app->get('/setup', function() use ($app, $setup_done) {
+  if ($setup_done == true){
+    return $app['twig']->render('setup_done.html');
+  }
+  else{
+    return $app['twig']->render('setup.html');
+  }
 });
 
-$app->post('/setup', function(Request $request) use ($app, $private, $public, $password, $setup_done) {
+$app->post('/setup', function(Request $request) use ($app, $private, $public, $password) {
   $username = $request->get('username');
   $passwd= $request->get('password');
   $password = (new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder())->encodePassword($passwd, '');
@@ -115,29 +119,47 @@ $app->get('/login', function(Request $request) use ($app) {
 $app->get('/public', function() use($app, $public) {
   $entries = ScanDirectory($public);
   return $app['twig']->render('list_public_files.html', array(
-    'folders' => $entires[0],    
+    'folders' => $entires[0],
     'files' => $entries[1],
   ));
 });
 
 $app->get('/public/{file_name}', function($file_name) use ($app, $public) {
-  if (!file_exists($public.'/'.$file_name)) {
-    $app->abort(404);
+  if (is_dir($public.'/'.$file_name)){
+    $entries = ScanDirectory($public.'/'.$file_name);
+    return $app['twig']->render('list_private_files.html', array(
+      'folders' => $entries[0],
+      'files' => $entries[1],
+    ));
   }
-  return $app->sendFile($public.'/'.$file_name);
+  else{
+    if (!file_exists($public.'/'.$file_name)) {
+      $app->abort(404);
+    }
+    return $app->sendFile($public.'/'.$file_name);
+  }
 });
 
 $app->get('/private', function() use($app, $private) {
   $entries = ScanDirectory($private);
   return $app['twig']->render('list_private_files.html', array(
-    'folders' => $entries[0],    
+    'folders' => $entries[0],
     'files' => $entries[1],
   ));
 });
 
 $app->get('/private/{file_name}', function($file_name) use ($app, $private) {
-  if (!file_exists($private.'/'.$file_name)) {
-    $app->abort(404);
+  if (is_dir($private.'/'.$file_name)){
+    $entries = ScanDirectory($private.'/'.$file_name);
+    return $app['twig']->render('list_private_files.html', array(
+      'folders' => $entries[0],
+      'files' => $entries[1],
+    ));
+  }
+  else{
+    if (!file_exists($private.'/'.$file_name)) {
+      $app->abort(404);
+    }
   }
   return $app->sendFile($private.'/'.$file_name);
 });
