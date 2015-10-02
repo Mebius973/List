@@ -7,12 +7,12 @@ $app['debug'] = true;
 
 use Symfony\Component\Yaml\Yaml;
 $yaml =  Yaml::parse(file_get_contents(__DIR__.'/config.yml'));
-$username = $yaml['username'];
-$password= $yaml['password'];
-$setup_done = $yaml['setup_done'];
+$username = isset($yaml['username']) ? $yaml['username'] : "username";
+$password= isset($yaml['password']) ? $yaml['password'] : "password";
+$setup_done = isset($yaml['setup_done']) ? $yaml['setup_done'] : "false";
 $folders = $yaml['folders'];
-$private = $folders['private'];
-$public = $folders['public'];
+$private = isset($folders['private']) ? $folders['private'] : "../Documents/private";
+$public = isset($folders['public']) ? $folders['public'] : "../Documents/public";
 
 $app['security.firewalls'] = array(
   'admin' => array(

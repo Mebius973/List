@@ -1,5 +1,5 @@
-username: a
-password: a
+username:
+password:
 setup_done: false
 folders:
     private: ../../Documents/private
