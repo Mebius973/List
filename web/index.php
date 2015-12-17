@@ -41,7 +41,7 @@ function ScanDirectory($Directory){
   while($Entry = @readdir($MyDirectory)) {
     if(!is_dir($Directory."/".$Entry) && $Entry != '.' && $Entry != '..' && $Entry != 'index.*') {
       $enc = mb_detect_encoding($Entry, "UTF-8,ISO-8859-1,ISO-8859-15");
-      $inc = iconv($enc, "ISO-8859-15", $Entry);
+      $inc = iconv($enc, "UTF-8", $Entry);
       $files = array_merge($files, [$inc]);
     }
   }
