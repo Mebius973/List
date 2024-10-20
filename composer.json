@@ -7,15 +7,32 @@
         }
     ],
     "require": {
-        "symfony/security": "^4.4",
-        "symfony/yaml": "^6.1",
-        "symfony/flex": "^2.2",
-        "twig/twig": "^3.4",
-        "symfony/twig-bridge": "~5.4"
+        "symfony/security-bundle": "^7.1",
+        "symfony/password-hasher": "^7.1",
+        "symfony/mime": "^7.1",
+        "symfony/config": "^7.1",
+        "symfony/http-kernel": "^7.1",
+        "symfony/http-foundation": "^7.1",
+        "symfony/routing": "^7.1",
+        "symfony/dependency-injection": "^7.1",
+        "symfony/framework-bundle": "^7.1",
+        "symfony/yaml": "^7.1",
+        "symfony/twig-bundle": "^7.1",
+        "symfony/web-profiler-bundle": "^7.1",
+        "symfony/runtime": "^7.1",
+        "symfony/console": "^7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
     },
     "config": {
         "allow-plugins": {
-            "symfony/flex": true
+            "symfony/runtime": true
         }
+    },
+    "extra": {
+        "public-dir": "."
     }
 }

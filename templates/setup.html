@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/check_password.js"> </script>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        min-height: 100vh;
+      }
+
+      label {
+        float: left;
+      }
+
+      input:not([type=submit]) {
+        float: left;
+        width: 250px;
+      }
+
+      .round-border {
+        border: 2px solid lightgray;
+        border-radius: 10px;
+      }
+
+      .flex-container {
+        width: 540px;
+        height: 206px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .flex-child {
+        height: 166px;
+        flex: 1;
+        padding: 20px 10px;
+      }
+
+      .left {
+        border-right: 1px dashed lightgray;
+      }
+
+      .right {
+        border-left: 1px dashed lightgray;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="form1" action="{{ path('setup') }}" method="post">
+      <div class="flex-container round-border">
+        <div class="flex-child left">
+          <label for="username">Username :</label> <br />
+          <input type="text" name="username" value="" id="username" /> <br /><br />
+          <label for="password">Password :</label> <br />
+          <input type="password" name="password" id="password" /> <br /><br />
+          <label for="check_password">Password Check :</label> <br />
+          <input type="password" name="check_password" id="check_password" /> <br />
+          <div class="registrationFormAlert" id="divCheckPasswordMatch"></div> <br /><br />
+        </div>
+        <div class="flex-child right">
+          <label for="public_folder">Chemin d'accès du dossier public :</label> <br />
+          <input type="text" name="public_folder" id="public_folder" placeholder="{{ public_folder }}"/> <br /><br />
+          <label for="private_folder">Chemin d'accès du dossier privé :</label> <br />
+          <input type="text" name="private_folder" id="private_folder" placeholder="{{ private_folder }}"/> <br /><br />
+        </div>
+      </div>
+      <div class="flex-container">
+        <div class="flex-child">
+        <input type="submit" disabled />
+      </div>
+    </div>
+    </form>
+  </body>
+  <footer>
+    <script type="text/javascript"> $("#check_password").keyup(checkPasswordMatch); </script> 
+  </footer>
+</html>

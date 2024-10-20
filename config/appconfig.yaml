@@ -1,0 +1,6 @@
+username:
+password:
+setup_done: false
+folders:
+    public: ../Documents/public
+    private: ../Documents/private

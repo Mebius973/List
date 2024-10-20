@@ -1,2 +1,2 @@
 # List
-A php list of files based on silex which provides an authentication (WIP)
+A php list of files based on Silex and migrated to Symfony which provides an authentication (WIP)

@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        min-height: 100vh;
+      }
+
+      label {
+        float: left;
+      }
+
+      input:not([type=submit]) {
+        float: left;
+        width: 250px;
+      }
+
+      .round-border {
+        border: 2px solid lightgray;
+        border-radius: 10px;
+      }
+
+      .flex-container {
+        width: 540px;
+        height: 79px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .flex-child {
+        height: 39px;
+        flex: 1;
+        padding: 20px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    {{ error }} <br />
+    <form action="{{ path('login_check') }}" method="post">
+      <div class="flex-container round-border">
+        <div class="flex-child">
+          <label for="username">Username :</label> <br />
+          <input type="text" name="username" value="" />
+        </div>
+        <div class="flex-child">
+          <label for="password">Password :</label> <br />
+          <input type="password" name="password" value="" /><br />
+        </div>
+      </div>
+      <div class="flex-container">
+        <div class="flex-child">
+          <input type="submit" />
+        </div>
+      </div>
+    </form>
+  </body>
+</html>
